@@ -45,15 +45,6 @@ def get_shares_and_imports(local_folders):
     shares = [f"{MAIN_LIBRARY_PATH}/{folder.as_posix()}/..." for folder, parent_count in local_folders.items() if parent_count == 0 ]
     imports = [f"{MAIN_LIBRARY_BRANCH}/{MAIN_LIBRARY_PATH}/{folder.as_posix()}/..." for folder, parent_count in local_folders.items() if parent_count == 0]
 
-# def get_master_library_paths():
-#     """Returns a Set of all unique directories in the main library depot path"""
-#     library_full_path = Path(MAIN_LIBRARY_BRANCH) / MAIN_LIBRARY_PATH
-#     all_folders = list({Path(file["depotFile"]).parent.relative_to(library_full_path) for file in p4.run_files("-e", f"{library_full_path}/...")})
-#     return {folder: {
-#         "child_count": sum(1 for f in all_folders if folder in f.parents), 
-#         "parent_count": sum(1 for f in all_folders if f in folder.parents)
-#     } for folder in all_folders}
-
 
 def get_root():
     try:
@@ -70,5 +61,4 @@ def get_root():
 
 
 if __name__ == "__main__":
-    
     main()
