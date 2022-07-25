@@ -8,8 +8,6 @@ import P4
 
 
 # ---------------------CONFIGURE THESE GLOBALS-----------------------
-# depot path to library directory in the main library stream with NO trailing / or ... (eg. "//ProjectName/Library-main")
-MAIN_LIBRARY_BRANCH = "//ProjectName/Library-main"
 # relative path to library folder in mainline stream on depot with NO trailing / or ... (eg. "Library/UE/Content/Library")
 MAIN_LIBRARY_PATH = "Library/UE/Content/Library"
 # relative path to library folder in local workspace with NO trailing / or ... (eg. "UE/Content/Library")
@@ -25,20 +23,15 @@ def main():
     workspace_root = get_root()
     local_library = workspace_root / LOCAL_LIBRARY_PATH
     local_folders = get_local_library_folders(local_library)
-    shares, imports = get_shares_and_imports(local_folders)
-    print_results(shares, imports)
+    shares = get_shares_and_imports(local_folders)
+    print_results(shares)
 
 
-def print_results(shares, imports):
-    print("Copy either the Share or Import paths below into your library dev stream.")
+def print_results(shares):
+    print("Copy the Share paths below into your library dev stream's Path field.")
     print()
-    print("Share paths: (preferred for child streams of main library)")
     for share in sorted(shares):
         print(f"share {share}")
-    print()
-    print("Import paths: (use for non-child streams)")
-    for imp in sorted(imports):
-        print(f"import+ {imp}")
 
 
 def get_local_library_folders(local_library):
@@ -48,9 +41,7 @@ def get_local_library_folders(local_library):
 
 
 def get_shares_and_imports(local_folders):
-    shares = [f"{MAIN_LIBRARY_PATH}/{folder.as_posix()}/..." for folder, parent_count in local_folders.items() if parent_count == 0 ]
-    imports = [f"{MAIN_LIBRARY_BRANCH}/{MAIN_LIBRARY_PATH}/{folder.as_posix()}/..." for folder, parent_count in local_folders.items() if parent_count == 0]
-    return shares, imports
+    return [f"{MAIN_LIBRARY_PATH}/{folder.as_posix()}/..." for folder, parent_count in local_folders.items() if parent_count == 0]
 
 
 def get_root():
