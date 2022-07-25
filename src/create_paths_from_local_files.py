@@ -32,6 +32,8 @@ def print_results(shares):
     print()
     for share in sorted(shares):
         print(f"share {share}")
+    print()
+    input("Press Enter to close")
 
 
 def get_local_library_folders(local_library):
