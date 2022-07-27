@@ -1,8 +1,6 @@
 # p4_library_tools
 Scripts to save time when using shared libraries between streams in Perforce.
 
-> Note:
-   
 
 This script can be setup to run as a [right-click menu item in P4V](#P4V-Setup-and-Usage) or as a [command line tool](#Command-Line-Usage).
 
